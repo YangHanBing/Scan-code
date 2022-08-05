@@ -1,18 +1,27 @@
 // pages/shop/shop.js
+import ShopModel from '../../model/shop'
 Page({
 
+  // 获取轮播图数据
+  async getBannerData() {
+    const response = await ShopModel.getShopBanner()
+    console.log(response);
+    this.setData({
+      bannerData: response.data
+    })
+  },
   /**
    * 页面的初始数据
    */
   data: {
-
+    bannerData: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    this.getBannerData()
   },
 
   /**

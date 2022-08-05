@@ -19,6 +19,7 @@ class Http {
         method,
         ...options
       })
+      wx.hideLoading()
       // 请求成功
       if (response.statusCode < 400) {
         return response.data
@@ -29,7 +30,7 @@ class Http {
       }
       Http._showError(response.data.code, response.data.msg)
       return response
-    }catch(error){
+    } catch (error) {
       wx.hideLoading()
       _showError(-1)
       console.log(error);
