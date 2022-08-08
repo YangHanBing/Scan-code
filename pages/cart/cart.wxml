@@ -23,8 +23,8 @@
     <text class="allPrice">￥{{allPrice}}</text>
   </view>
   <view class="action">
-    <text class="reAdd">继续添加</text>
-    <text class="toPay">去结算({{allNum}})</text>
+    <text class="reAdd" bindtap="handleReAdd">继续添加</text>
+    <text class="toPay" bindtap="handleToPay">去结算({{allNum}})</text>
   </view>
  </view>
 </view>

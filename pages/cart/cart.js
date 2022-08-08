@@ -1,5 +1,6 @@
 // pages/cart/cart.js
 import Storage from '../../utils/storage'
+import {navigateTo} from "../../utils/navigate"
 Page({
   // 获取当前点击商品的信息
   hasCartData(event){
@@ -78,14 +79,25 @@ Page({
     allPrice:0,
     allNum:0
   },
-
+  // 继续添加事件（跳转到shop页面）
+  handleReAdd(){
+    wx.switchTab({
+      url:'/pages/shop/shop'
+    })
+  },
+  // 去支付事件（跳转到支付页面）
+  handleToPay(){
+    navigateTo('/pages/pay/pay')
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    // 获取本地商品信息
     let carts = Storage.get("carts")
     this.setData({goodsList:carts})
     if(!this.data.goodsList) return
+    //  计算总价
     this.handleGetAll(this.data.goodsList)
   },
 

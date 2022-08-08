@@ -3,6 +3,7 @@
       "pages/shop/shop",
       "pages/every/every",
       "pages/cart/cart",
+      "pages/pay/pay",
       "pages/my/my"
   ],
   "window": {
