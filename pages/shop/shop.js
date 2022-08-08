@@ -13,6 +13,7 @@ Page({
       bannerData: response.data
     })
   },
+  // 点击扫码事件
   async getShopCode(event) {
     // 商品条形码
     const qcode = event.detail

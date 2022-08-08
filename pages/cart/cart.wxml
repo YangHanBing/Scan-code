@@ -1,15 +1,30 @@
 <view class="container">
  <view class="list">
-  商品列表
+  <view class="goods"  wx:for="{{goodsList}}" wx:key="index">
+    <text class="title">
+      {{item.title}}
+    </text>
+    <text class="price">
+      ￥{{item.price}}
+    </text>
+    <view class="stepper">
+      <!-- 减号 -->
+      <text data-index="{{index}}" bindtap="bindMinusj">-</text>
+      <!-- 数值 -->
+      <input type="number" bindchange="bindManual" value="{{item.num}}" />
+      <!-- 加号 -->
+      <text data-index="{{index}}" class="normal" bindtap="bindPlus">+</text>
+    </view>
+  </view>
  </view>
  <view class='action_box'>
   <view class="total_price">
     <text class="zj">总价：</text>
-    <text class="price">￥3.50</text>
+    <text class="allPrice">￥{{allPrice}}</text>
   </view>
   <view class="action">
     <text class="reAdd">继续添加</text>
-    <text class="toPay">去结算(1)</text>
+    <text class="toPay">去结算({{allNum}})</text>
   </view>
  </view>
 </view>
