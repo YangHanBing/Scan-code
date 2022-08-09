@@ -3,6 +3,9 @@ import Storage from '../../utils/storage'
 import {
   navigateTo
 } from "../../utils/navigate"
+import {
+  getShopCode
+} from '../../common/cart'
 Page({
   // 实训商品数量增加
   bindPlus(event) {
@@ -38,9 +41,9 @@ Page({
         if (res.confirm) {
           this.data.goodsList.splice(index, 1)
           this.setData({
-            goodsList:this.data.goodsList
+            goodsList: this.data.goodsList
           })
-          Storage.set("carts",this.data.goodsList)
+          Storage.set("carts", this.data.goodsList)
           this.handleGetAll()
         } else if (res.cancel) {
           console.log('用户点击取消')
@@ -48,7 +51,6 @@ Page({
       }
     })
   },
-
   // 计算所有商品的总价和·总量
   handleGetAll() {
     let allPrice = 0
@@ -72,18 +74,10 @@ Page({
     allPrice: 0,
     allNum: 0
   },
-  // 继续添加事件（调用扫码功能）
-  handleReAdd() {
-
-  },
-  // 去支付事件（跳转到支付页面）
-  handleToPay() {
-    navigateTo('/pages/pay/pay')
-  },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad(options) {
+   onLoad(options) {
     this.getGoodsList()
   },
   // 获取·商品信息并计算总价
@@ -97,7 +91,23 @@ Page({
     //  计算总价
     this.handleGetAll()
   },
-
+  // 继续添加事件（调用扫码功能）
+  handleReAdd() {
+    wx.scanCode({
+      onlyFromCamera: true,
+      success: (res) => {
+        const event = {
+          detail: res.result
+        }
+        getShopCode(event)
+        this.getGoodsList()
+      }
+    })
+  },
+  // 去支付事件（跳转到支付页面）
+  handleToOrder() {
+    navigateTo('/pages/order/order')
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -109,7 +119,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
   },
 
   /**

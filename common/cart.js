@@ -38,7 +38,6 @@ const hasShopData = (data, localData) => {
 }
 // 开启扫码功能
 const getShopCode = async (event) => {
-  console.log(event);
   // 商品条形码
   const qcode = event.detail
   if (!qcode) return

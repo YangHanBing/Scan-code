@@ -27,3 +27,19 @@
   width: 180rpx;
   text-align: center;
 }
+.qrcode-button{
+  position: relative;
+}
+.circle{
+  position: absolute;
+  min-width: 60rpx;
+  min-height: 60rpx;
+  right:44rpx;
+  border-radius: 50%;
+  top : 44rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f60;
+  color : #fff;
+}

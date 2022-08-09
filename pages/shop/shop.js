@@ -1,5 +1,6 @@
 // pages/shop/shop.js
 import ShopModel from '../../model/shop'
+import Storage from '../../utils/storage'
 import {
   navigateTo
 } from "../../utils/navigate"
@@ -16,8 +17,11 @@ Page({
     })
   },
   // 点击扫码事件
-  hanldeSaoCode(event) {
-    console.log(event);
+  handleSaoCode(event) {
+    if(this.data.status){
+      navigateTo("/pages/order/order")
+      return
+    }
     getShopCode(event)
     // 跳转到购物车页面
     navigateTo('/pages/cart/cart')
@@ -26,9 +30,25 @@ Page({
    * 页面的初始数据
    */
   data: {
-    bannerData: []
+    bannerData: [],
+    goodsList:[],
+    status : false,
+    count : 0
   },
+ /**
+   * 初始化获取商品数据
+   */
+  getGoodsList(){
+    const goodsList = Storage.get("carts")
+    const  status = goodsList.length > 0 ? true : false
+    const count = goodsList.length
+    this.setData({
+      goodsList,
+      status,
+      count
+    })
 
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -47,7 +67,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    this.getGoodsList()
   },
 
   /**

@@ -4,7 +4,11 @@ Component({
    * 组件的属性列表
    */
   properties: {
-
+    status: Boolean,
+    count: {
+      type: Number,
+      value: 0
+    }
   },
 
   /**
@@ -19,13 +23,17 @@ Component({
    */
   methods: {
     // 开启扫码
-    handleScanCode(){
+    handleScanCode() {
+      if(this.data.status){
+        this.triggerEvent("getResult")
+        return
+      }
       wx.scanCode({
-        onlyFromCamera:true,
-        success:(res)=>{
-          this.triggerEvent('getResult',res.result)
+        onlyFromCamera: true,
+        success: (res) => {
+          this.triggerEvent('getResult', res.result)
         },
-        fail:(err)=>{
+        fail: (err) => {
           console.log('取消扫码');
         }
       })
