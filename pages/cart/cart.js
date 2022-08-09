@@ -1,70 +1,63 @@
 // pages/cart/cart.js
 import Storage from '../../utils/storage'
-import {navigateTo} from "../../utils/navigate"
+import {
+  navigateTo
+} from "../../utils/navigate"
 Page({
-  // 获取当前点击商品的信息
-  hasCartData(event){
-    //先获取当前所点击元素的下标
-    let idx = event.currentTarget.dataset.index
-    //获取到购物车的所有数据
-    let cartData = this.data.goodsList
-    console.log(cartData);
-    //如果购物车的数据不存在,则不继续往下执行
-    if(!cartData) return;
-
-    return {idx,cartData}
-  },
   // 实训商品数量增加
-  bindPlus(event){
-    let {idx,cartData} = this.hasCartData(event)
-    //让当前所点击对应的下标的数据的num + 1  [ {},{}]
-    cartData[idx].num +=1;
-    this.setData({
-      goodsList : cartData
-    })
-    Storage.set("carts",cartData)
-    this.handleGetAll(cartData)
+  bindPlus(event) {
+    this.handleComputedCount(event, 'increment')
+    this.handleGetAll()
   },
   // 实现商品数量减少
-  bindMinusj(event){
-    let {idx,cartData} = this.hasCartData(event)
-    console.log(idx,cartData)
-    // 如果商品数量小于0时删除本地的当前的商品
-    if(cartData[idx].num <= 1){
-      wx.showModal({
-        title: '提示',
-        content: '您确定要删除这个商品吗？',
-        success : (res) =>{
-          if (res.confirm) {
-            cartData.splice(idx,1)
-            console.log(cartData)
-            this.setData({
-              goodsList : cartData
-            })
-            Storage.set("carts",cartData)
-            this.handleGetAll(cartData)
-          } else if (res.cancel) {
-            console.log('用户点击取消')
-          }
-        }
-      })
-    }else{
-      cartData[idx].num -=1;
+  bindMinusj(event) {
+    this.handleComputedCount(event, 'decrement')
+    this.handleGetAll()
+  },
+  // 计算商品价格
+  handleComputedCount(event, action) {
+    const _index = event.currentTarget.dataset.index
+    action === 'increment' ? this.data.goodsList[_index].num += 1 : this.data.goodsList[_index].num -= 1
+    if (this.data.goodsList[_index].num <= 0) {
+      this.data.goodsList[_index].num = 1
+      this.handleDelCart(_index)
+      return
     }
     this.setData({
-      goodsList : cartData
+      goodsList: this.data.goodsList
     })
-    Storage.set("carts",cartData)
-    this.handleGetAll(cartData)
+    Storage.set("carts", this.data.goodsList)
   },
+  // 商品数量 < 1 的事件
+  handleDelCart(index) {
+    // 如果商品数量小于1时删除本地的当前的商品
+    wx.showModal({
+      title: '提示',
+      content: '您确定要删除这个商品吗？',
+      success: (res) => {
+        if (res.confirm) {
+          this.data.goodsList.splice(index, 1)
+          this.setData({
+            goodsList:this.data.goodsList
+          })
+          Storage.set("carts",this.data.goodsList)
+          this.handleGetAll()
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+
   // 计算所有商品的总价和·总量
-  handleGetAll(goodsList){
+  handleGetAll() {
     let allPrice = 0
     let allNum = 0
-    goodsList.forEach(item => {
-      allPrice += ((item.price*10)*item.num)/10
+    this.data.goodsList.forEach(item => {
+      allPrice += ((item.price * 10) * item.num) / 10
       allNum += item.num
     });
+    // 将价格四舍五入到指定位数
     allPrice.toFixed(1)
     this.setData({
       allPrice,
@@ -76,29 +69,35 @@ Page({
    */
   data: {
     goodsList: [],
-    allPrice:0,
-    allNum:0
+    allPrice: 0,
+    allNum: 0
   },
   // 继续添加事件（跳转到shop页面）
-  handleReAdd(){
+  handleReAdd() {
     wx.switchTab({
-      url:'/pages/shop/shop'
+      url: '/pages/shop/shop'
     })
   },
   // 去支付事件（跳转到支付页面）
-  handleToPay(){
+  handleToPay() {
     navigateTo('/pages/pay/pay')
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    this.getGoodsList()
+  },
+  // 获取·商品信息并计算总价
+  getGoodsList() {
     // 获取本地商品信息
     let carts = Storage.get("carts")
-    this.setData({goodsList:carts})
-    if(!this.data.goodsList) return
+    this.setData({
+      goodsList: carts
+    })
+    if (!this.data.goodsList) return
     //  计算总价
-    this.handleGetAll(this.data.goodsList)
+    this.handleGetAll()
   },
 
   /**
