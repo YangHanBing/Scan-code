@@ -72,11 +72,9 @@ Page({
     allPrice: 0,
     allNum: 0
   },
-  // 继续添加事件（跳转到shop页面）
+  // 继续添加事件（调用扫码功能）
   handleReAdd() {
-    wx.switchTab({
-      url: '/pages/shop/shop'
-    })
+
   },
   // 去支付事件（跳转到支付页面）
   handleToPay() {

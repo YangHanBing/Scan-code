@@ -1,4 +1,6 @@
 import Storage from "../utils/storage";
+import ShopModel from '../model/shop'
+
 // 将商品信息添加到本地
 const addCart = (data) => {
   const cartArray = []
@@ -34,6 +36,27 @@ const hasShopData = (data, localData) => {
   })
   return _data.length > 0 ? true : false
 }
+// 开启扫码功能
+const getShopCode = async (event) => {
+  console.log(event);
+  // 商品条形码
+  const qcode = event.detail
+  if (!qcode) return
+  try {
+    // 调用获取商品信息接口
+    const response = await ShopModel.getGoodsInfo(qcode)
+    if (!response.success) return
+    // 获取商品信息
+    const result = response.result
+    // 如果获取的商品信息长度 < 0 ，则不向下执行
+    if (result.length <= 0) return
+    // 将商品信息添加的本地
+    addCart(result[0])
+
+  } catch (err) {
+    console.log(err);
+  }
+}
 export {
-  addCart
+  getShopCode
 }
