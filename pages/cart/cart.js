@@ -77,7 +77,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-   onLoad(options) {
+  onLoad(options) {
     this.getGoodsList()
   },
   // 获取·商品信息并计算总价
@@ -92,14 +92,14 @@ Page({
     this.handleGetAll()
   },
   // 继续添加事件（调用扫码功能）
-  handleReAdd() {
-    wx.scanCode({
+   handleReAdd() {
+     wx.scanCode({
       onlyFromCamera: true,
-      success: (res) => {
+      success: async (res) => {
         const event = {
           detail: res.result
         }
-        getShopCode(event)
+        await getShopCode(event)
         this.getGoodsList()
       }
     })
@@ -118,8 +118,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow() {
-  },
+  onShow() {},
 
   /**
    * 生命周期函数--监听页面隐藏

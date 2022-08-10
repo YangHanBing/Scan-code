@@ -21,6 +21,7 @@ const addCart = (data) => {
       localData.push(data)
     }
     Storage.set('carts', localData)
+    return localData
   }
 }
 // 判断本地有没有商品信息
@@ -41,21 +42,21 @@ const getShopCode = async (event) => {
   // 商品条形码
   const qcode = event.detail
   if (!qcode) return
-  try {
+  // try {
     // 调用获取商品信息接口
     const response = await ShopModel.getGoodsInfo(qcode)
     if (!response.success) return
     // 获取商品信息
     const result = response.result
     // 如果获取的商品信息长度 < 0 ，则不向下执行
-    if (result.length <= 0) return
+    if (result.length <= 1)
     // 将商品信息添加的本地
-    addCart(result[0])
-
-  } catch (err) {
-    console.log(err);
-  }
+    var data = addCart(result[0])
+    return data
+  // } catch (err) {
+  //   console.log(err);
+  // }
 }
-export {
+export{
   getShopCode
 }

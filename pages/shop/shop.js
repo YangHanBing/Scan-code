@@ -1,12 +1,12 @@
 // pages/shop/shop.js
-import ShopModel from '../../model/shop'
-import Storage from '../../utils/storage'
-import {
-  navigateTo
-} from "../../utils/navigate"
 import {
   getShopCode
 } from '../../common/cart'
+import ShopModel from '../../model/shop'
+import {
+  navigateTo
+} from "../../utils/navigate"
+import Storage from '../../utils/storage'
 Page({
 
   // 获取轮播图数据
@@ -17,12 +17,12 @@ Page({
     })
   },
   // 点击扫码事件
-  handleSaoCode(event) {
-    if(this.data.status){
+  async handleSaoCode(event) {
+    if (this.data.status) {
       navigateTo("/pages/order/order")
       return
     }
-    getShopCode(event)
+    await getShopCode(event)
     // 跳转到购物车页面
     navigateTo('/pages/cart/cart')
   },
@@ -31,29 +31,34 @@ Page({
    */
   data: {
     bannerData: [],
-    goodsList:[],
-    status : false,
-    count : 0
+    goodsList: [],
+    status: false,
+    count: 0
   },
- /**
+  /**
    * 初始化获取商品数据
    */
-  getGoodsList(){
+  getGoodsList() {
     const goodsList = Storage.get("carts")
-    const  status = goodsList.length > 0 ? true : false
-    const count = goodsList.length
+    const status = goodsList.length > 0 ? true : false
+    let count = 0
+    if (goodsList) {
+      goodsList.forEach(item => {
+        count += item.num
+      });
+    }
     this.setData({
       goodsList,
       status,
       count
     })
-
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
     this.getBannerData()
+    this.getGoodsList()
   },
 
   /**
