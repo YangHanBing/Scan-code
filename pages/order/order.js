@@ -8,14 +8,18 @@ Page({
   getGoodsList() {
     // 获取本地商品信息
     let carts = Storage.get("carts")
+    let initCarts=Storage.get("carts")
+    initCarts.length=1
     this.setData({
       goodsList: carts,
+      initGoodsList:initCarts,
       allPrice:handleGetAllPrice()
     })
     if (!this.data.goodsList) return
   },
   data: {
     goodsList: [],
+    initGoodsList: [],
     allPrice: 0,
     balance:4,
     showflag:false,

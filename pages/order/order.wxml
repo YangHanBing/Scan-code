@@ -1,7 +1,7 @@
 <view class="container">
   <view class="box">
     <view class="list">
-      <view class="item" wx:for="{{goodsList}}" wx:key="index">
+      <view class="item" wx:for="{{showflag?goodsList:initGoodsList}}" wx:key="index">
         <view class="desc">
           <text class="title">{{item.title}}</text>
           <text class="iprice">￥{{item.price}}</text>
