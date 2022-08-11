@@ -4,7 +4,8 @@ import {
   navigateTo
 } from "../../utils/navigate"
 import {
-  getShopCode
+  getShopCode,
+  handleGetAllPrice
 } from '../../common/cart'
 Page({
   // 实训商品数量增加
@@ -51,16 +52,10 @@ Page({
       }
     })
   },
-  // 计算所有商品的总价和·总量
+  // 计算所有商品的总价
   handleGetAll() {
-    let allPrice = 0
-    this.data.goodsList.forEach(item => {
-      allPrice += ((item.price * 10) * item.num) / 10
-    });
-    // 将价格四舍五入到指定位数
-    allPrice.toFixed(1)
     this.setData({
-      allPrice
+      allPrice:handleGetAllPrice()
     })
   },
   /**

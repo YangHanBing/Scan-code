@@ -42,7 +42,7 @@ const getShopCode = async (event) => {
   // 商品条形码
   const qcode = event.detail
   if (!qcode) return
-  // try {
+  try {
     // 调用获取商品信息接口
     const response = await ShopModel.getGoodsInfo(qcode)
     if (!response.success) return
@@ -53,10 +53,22 @@ const getShopCode = async (event) => {
     // 将商品信息添加的本地
     var data = addCart(result[0])
     return data
-  // } catch (err) {
-  //   console.log(err);
-  // }
+  } catch (err) {
+    console.log(err);
+  }
+}
+// 计算商品总价
+const handleGetAllPrice=()=> {
+  let allPrice = 0
+  const goodsList = Storage.get("carts")
+  goodsList.forEach(item => {
+    allPrice += ((item.price * 10) * item.num) / 10
+  });
+  // 将价格四舍五入到指定位数
+  allPrice.toFixed(1)
+  return allPrice
 }
 export{
-  getShopCode
+  getShopCode,
+  handleGetAllPrice
 }
