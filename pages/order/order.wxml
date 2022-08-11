@@ -14,7 +14,8 @@
     </view>
     <view class="ibox">
       <view>余额 <span class="price">(￥{{balance}})</span></view>
-      <switch color="#FEBE1B" bindchange="handleSwitch"></switch>
+      <switch wx:if="{{status}}" color="#FEBE1B" bindchange="handleSwitch"></switch>
+      <switch wx:else disabled color="#FEBE1B" bindchange="handleSwitch"></switch>
     </view>
     <view class="ibox">
       <text>商品金额</text>

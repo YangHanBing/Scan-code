@@ -26,13 +26,22 @@ Page({
     allPrice: 0,
     balance:4,
     showflag:false,
-    switchflag: false
+    switchflag: false,
+    status:true
   },
   // 展开收起事件
   handleChange(){
     this.setData({
       showflag :!this.data.showflag
     })
+  },
+  // 判断是否可以支付减免
+  handleStatus(){
+    if(this.data.allPrice <= this.data.balance){
+      this.setData({
+        status:false
+      })
+    }
   },
   // 支付减免事件
   handleSwitch(event){
@@ -51,6 +60,7 @@ Page({
    */
   onLoad(options) {
     this.getGoodsList()
+    this.handleStatus()
   },
 
   /**
