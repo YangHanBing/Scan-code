@@ -40,8 +40,10 @@ Page({
       switchflag:event.detail.value
     })
   },
-  // 确认支付事件
+  // 确认支付事件(删除本地的商品并跳转到支付成功页面)
   handlePay(){
+    // Storage.set('carts',[])
+    Storage.removeAll()
     navigateTo('/pages/success/success')
   },
   /*,*
