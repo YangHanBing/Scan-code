@@ -3,6 +3,6 @@
     <i-swiper data="{{bannerData}}"></i-swiper>
   </view>
   <view class="main">
-    <i-code-button count="{{count}}" status="{{status}}" bind:getResult="handleSaoCode"></i-code-button>
+    <i-code-button count="{{goodsList.length}}" status="{{status}}" bind:getResult="handleSaoCode"></i-code-button>
   </view>
 </view>

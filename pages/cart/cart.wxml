@@ -24,7 +24,7 @@
   </view>
   <view class="action">
     <text class="reAdd" bindtap="handleReAdd">继续添加</text>
-    <text class="toPay" bindtap="handleToOrder">去结算({{allNum}})</text>
+    <text class="toPay" bindtap="handleToOrder">去结算({{goodsList.length}})</text>
   </view>
  </view>
 </view>

@@ -32,8 +32,7 @@ Page({
   data: {
     bannerData: [],
     goodsList: [],
-    status: false,
-    count: 0
+    status: false
   },
   /**
    * 初始化获取商品数据
@@ -41,16 +40,9 @@ Page({
   getGoodsList() {
     const goodsList = Storage.get("carts")
     const status = goodsList.length > 0 ? true : false
-    let count = 0
-    if (goodsList) {
-      goodsList.forEach(item => {
-        count += item.num
-      });
-    }
     this.setData({
       goodsList,
-      status,
-      count
+      status
     })
   },
   /**

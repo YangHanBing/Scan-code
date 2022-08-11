@@ -54,16 +54,13 @@ Page({
   // 计算所有商品的总价和·总量
   handleGetAll() {
     let allPrice = 0
-    let allNum = 0
     this.data.goodsList.forEach(item => {
       allPrice += ((item.price * 10) * item.num) / 10
-      allNum += item.num
     });
     // 将价格四舍五入到指定位数
     allPrice.toFixed(1)
     this.setData({
-      allPrice,
-      allNum
+      allPrice
     })
   },
   /**
@@ -71,8 +68,7 @@ Page({
    */
   data: {
     goodsList: [],
-    allPrice: 0,
-    allNum: 0
+    allPrice: 0
   },
   /**
    * 生命周期函数--监听页面加载
