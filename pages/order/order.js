@@ -3,6 +3,9 @@ import Storage from '../../utils/storage'
 import {
   handleGetAllPrice
 } from '../../common/cart'
+import {
+  navigateTo
+} from "../../utils/navigate"
 Page({
   // 获取商品信息并计算总价
   getGoodsList() {
@@ -37,7 +40,11 @@ Page({
       switchflag:event.detail.value
     })
   },
-  /**
+  // 确认支付事件
+  handlePay(){
+    navigateTo('/pages/success/success')
+  },
+  /*,*
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {

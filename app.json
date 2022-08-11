@@ -4,7 +4,8 @@
       "pages/every/every",
       "pages/cart/cart",
       "pages/order/order",
-      "pages/my/my"
+      "pages/my/my",
+      "pages/success/success"
   ],
   "window": {
       "backgroundTextStyle": "light",

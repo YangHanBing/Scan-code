@@ -21,6 +21,13 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "支付成功",
+          "pathName": "pages/success/success",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }
