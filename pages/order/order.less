@@ -1,0 +1,88 @@
+.box{
+  background-color: #f9f9f9;
+  width: 100%;
+  height: 100%;
+}
+.change{
+  height: 100rpx !important;
+  justify-content: center !important;
+}
+.ibox{
+  width: 100%;
+  height: 120rpx;
+  background-color: #fff;
+  border-bottom: 10rpx solid #f9f9f9;
+  font-size: 32rpx;
+  box-sizing: border-box;
+  padding: 0 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .price{
+    color: red;
+  }
+}
+.list{
+  width: 100%;
+  .item{
+    background-color: #fff;
+    width: 100%;
+    height: 160rpx;
+    border-bottom: 1px solid #ddd;
+    box-sizing: border-box;
+    padding: 20rpx;
+    font-size: 32rpx;
+    position: relative;
+    .desc{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .title{
+        width: 400rpx;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+      .iprice{
+        font-size: 26rpx;
+        color: red;
+      }
+    }
+    .num{
+      position: absolute;
+      bottom: 20rpx;
+      right: 20rpx;
+    }
+  }
+}
+.pay_box{
+  background-color: #fff;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100rpx;
+  border-top: 1px solid #ccc;
+  display: flex;
+  font-size: 32rpx;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding-left:20rpx;
+  .allPrice{
+    font-size: 28rpx;
+    color: #333;
+    .price{
+      color: red;
+    }
+  }
+  .pay{
+    background-color: #ffa72b;
+    height: 100%;
+    width: 200rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+  }
+}

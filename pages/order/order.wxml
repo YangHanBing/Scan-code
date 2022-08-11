@@ -1,2 +1,34 @@
-<!--pages/order/order.wxml-->
-<text>pages/order/order.wxml</text>
+<view class="container">
+  <view class="box">
+    <view class="list">
+      <view class="item" wx:for="{{goodsList}}" wx:key="index">
+        <view class="desc">
+          <text class="title">{{item.title}}</text>
+          <text class="iprice">￥{{item.price}}</text>
+        </view>
+        <view class="num">x{{item.num}}</view>
+      </view>
+    </view>
+    <view class="change ibox">
+      <view>共2件商品 <span bindtap="handleChange">{{showflag?'收起':'展开'}}</span></view>
+    </view>
+    <view class="ibox">
+      <view>余额 <span class="price">(￥{{balance}})</span></view>
+      <switch color="#FEBE1B" bindchange="handleSwitch"></switch>
+    </view>
+    <view class="ibox">
+      <text>商品金额</text>
+      <text class="price">￥{{allPrice}}</text>
+    </view>
+    <view class="ibox">
+      <text>余额减扣</text>
+      <text class="price">{{switchflag?'-￥'+balance:0}}</text>
+    </view>
+  </view>
+  <view class="pay_box">
+    <view class="allPrice">
+      实际支付：<text class="price">￥{{switchflag?allPrice-balance:allPrice}}</text>
+    </view>
+    <view class="pay" bindtap="handlePay">确认支付</view>
+  </view>
+</view>

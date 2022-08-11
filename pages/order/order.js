@@ -1,18 +1,43 @@
 // pages/order/order.js
+import Storage from '../../utils/storage'
+import {
+  handleGetAllPrice
+} from '../../common/cart'
 Page({
-
-  /**
-   * 页面的初始数据
-   */
-  data: {
-
+  // 获取商品信息并计算总价
+  getGoodsList() {
+    // 获取本地商品信息
+    let carts = Storage.get("carts")
+    this.setData({
+      goodsList: carts,
+      allPrice:handleGetAllPrice()
+    })
+    if (!this.data.goodsList) return
   },
-
+  data: {
+    goodsList: [],
+    allPrice: 0,
+    balance:4,
+    showflag:false,
+    switchflag: false
+  },
+  // 展开收起事件
+  handleChange(){
+    this.setData({
+      showflag :!this.data.showflag
+    })
+  },
+  // 支付减免事件
+  handleSwitch(event){
+    this.setData({
+      switchflag:event.detail.value
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    this.getGoodsList()
   },
 
   /**
