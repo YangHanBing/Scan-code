@@ -52,7 +52,7 @@ Page({
   // 确认支付事件(删除本地的商品并跳转到支付成功页面)
   handlePay(){
     // Storage.set('carts',[])
-    Storage.removeAll()
+    Storage.remove("carts")
     navigateTo('/pages/success/success')
   },
   /*,*

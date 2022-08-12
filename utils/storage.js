@@ -8,8 +8,8 @@ class Storage {
     return wx.getStorageSync(key)
   }
   // 删除本地的数据
-  static remove() {
-    wx.removeStorageSync()
+  static remove(key) {
+    wx.removeStorageSync(key)
   }
   // 清空本地的数据
   static removeAll() {
