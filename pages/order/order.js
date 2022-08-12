@@ -6,6 +6,7 @@ import {
 import {
   navigateTo
 } from "../../utils/navigate"
+import sign from "../../utils/sign"
 Page({
   // 获取商品信息并计算总价
   getGoodsList() {
@@ -51,9 +52,54 @@ Page({
   },
   // 确认支付事件(删除本地的商品并跳转到支付成功页面)
   handlePay(){
-    // Storage.set('carts',[])
     Storage.remove("carts")
     navigateTo('/pages/success/success')
+    // this.handleOrder()
+  },
+  // 统一下单方法
+  async handleOrder(){
+    const userInfo = Storage.get("userInfo")
+    // 获取签名/ 获取加密之后的字符串
+    const str = sign({
+      openid: userInfo.openid,
+      uid : userInfo._id,
+      salt : userInfo.salt
+    })
+    // 在这个方法里面要调用统一下单接口
+    const data = {
+      openid : userInfo.openid,
+      uid : userInfo._id,
+      sign : str, // 就是一段加密的字符串
+      total_price : this.data.totalPrice,
+      total_num : this.data.totalNum,
+      derate_price : this.data.currentBalance,
+      real_price : this.data.currentPrice,
+      order : JSON.stringify(this.data.resultCarts)
+    }
+    const response = await orderModel.order(data)
+    console.log("response",response)
+    this.handlePayRequest(response)
+  },
+   // 发起支付方法
+   handlePayRequest(params){
+    const data = JSON.parse(params.result)
+    console.log("params",JSON.parse(params.result))
+    wx.requestPayment({
+      nonceStr: data.nonceStr,
+      package: data.package,
+      paySign: data.paySign,
+      timeStamp: data.timeStamp,
+      signType : 'MD5',
+      success : res=>{
+        console.log("1")
+        navigateTo("/pages/success/success")
+        Storage.remove("carts")
+      },
+      fail : err=>{
+        console.log("2")
+        console.log(err)
+      }
+    })
   },
   /*,*
    * 生命周期函数--监听页面加载
